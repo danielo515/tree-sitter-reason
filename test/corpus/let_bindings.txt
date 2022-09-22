@@ -83,8 +83,8 @@ let {Bar.Bar.bar: bar} = foo
 Array destructuring
 ============================================
 
-let [bar, baz] = foo
-let [bar, baz, _] = foo
+let [|bar, baz|] = foo
+let [|bar, baz, _|] = foo
 
 ---
 
@@ -106,7 +106,7 @@ let [bar, baz, _] = foo
 List destructuring
 ============================================
 
-let list{head, ...tail} = foo
+let [head, ...tail] = foo
 
 ---
 
@@ -235,12 +235,12 @@ let rec a = x => x + b(x) and b = y => y - 1
 And (decorated)
 ============================================
 
-@one
+[@one]
 let rec a = b
-@two @three
+[@two][@three]
 and b = c
 
-@four and c = 42
+[@four] and c = 42
 
 ---
 

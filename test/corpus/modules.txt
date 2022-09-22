@@ -299,19 +299,19 @@ Externals
 ===========================================
 
 external aX: t => float = "aX"
-@val external foo: int = "foo"
-@bs.val external foo: int = "foo"
-@module("libfoo") @new external foo: t = "Foo"
+[@val] external foo: int = "foo"
+[@bs.val] external foo: int = "foo"
+[@module("libfoo")] [@new] external foo: t = "Foo"
 external _makeStyles: ({..}, . unit) => {..} = "makeStyles"
 
-@send
-external pushState: (Dom.history, @as(json`null`) _, @as("") _, ~href: string) => unit =
+[@send]
+external pushState: (Dom.history, [@as(json`null`)] _, [@as("")] _, ~href: string) => unit =
   "pushState"
 
-@send
+[@send]
 external add: (
   t,
-  ~option: @unwrap [#Option(Dom.htmlOptionElement) | #OptGroup(Dom.htmlOptGroupElement)],
+  ~option:[@unwrap] [#Option(Dom.htmlOptionElement) | #OptGroup(Dom.htmlOptGroupElement)],
 ) => unit = "add"
 
 ---
@@ -403,7 +403,7 @@ external add: (
 Decorators
 ===========================================
 
-@@warning("-27")
+[@warning("-27")]
 
 ---
 

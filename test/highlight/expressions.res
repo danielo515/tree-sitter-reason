@@ -10,15 +10,15 @@ foo->bar == +x +. 1.0
 
 switch foo {
 // <- conditional
-| list{1, x, ...rest} =>
+| [1, x, ...rest] =>
 //^ type
-//     ^ number
-//        ^ parameter
-//           ^ punctuation.special
-//              ^ parameter
-//                    ^ punctuation.special
+// ^ number
+//    ^ parameter
+//        ^ punctuation.special
+//            ^ parameter
+//                ^ punctuation.special
   42
-| list{1, 2, ...list{b, ..._} as rest} => rest
+| [1, 2, ...[ b, ..._ ] as rest] => rest
 //                   ^ parameter
 //                                ^ variable
 | exception Js.Exn.Error(_) => 99
@@ -45,13 +45,13 @@ try {
   someOtherJSFunctionThatThrows()
 } catch {
 // ^ exception
-| Not_found => 1 // catch a ReScript exception
-| Invalid_argument(_) => 2 // catch a second ReScript exception
+| Not_found => 1 // catch a reason exception
+| Invalid_argument(_) => 2 // catch a second reason exception
 | Js.Exn.Error(obj) => 3 // catch the JS exception
 }
 
 
-let c = list{a, ...list{b}}
+let c = [a, ...[b]]
 //          ^ type
 //           ^ variable
 //                      ^ variable

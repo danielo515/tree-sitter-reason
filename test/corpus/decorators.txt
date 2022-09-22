@@ -2,7 +2,7 @@
 This decorator
 ============================================
 
-foo(bar, @this (me, amount) => set(me, amount))
+foo(bar, [@this] (me, amount) => set(me, amount))
 
 ---
 
@@ -27,11 +27,11 @@ foo(bar, @this (me, amount) => set(me, amount))
 Reanalyze Decorator
 ============================================
 
-let foo = (@doesNotRaise String.make)(12, ' ')
+let foo = ([@doesNotRaise] String.make)(12, ' ')
 
-let foo = @doesNotRaise String.make(12, ' ')
+let foo = [@doesNotRaise] String.make(12, ' ')
 
-let onResult = () => @doesNotRaise Belt.Array.getExn([], 0)
+let onResult = () => [@doesNotRaise] Belt.Array.getExn([], 0)
 
 ---
 
@@ -71,15 +71,15 @@ let onResult = () => @doesNotRaise Belt.Array.getExn([], 0)
 Decorator before type `and`
 ============================================
 
-@deriving
+[@deriving]
 type foo = {
   foo: string
 }
-@deriving
+[@deriving]
 and bar = {bar: int}
 
 
-@deriving @hello and baz = {baz: float}
+[@deriving] [@hello] and baz = {baz: float}
 
 ---
 

@@ -251,7 +251,7 @@ Record
 {a, b, c}
 
 {School.age: 20}
-{School.age: 20, name: "Big ReScript"}
+{School.age: 20, name: "Big reason"}
 
 {x: ?None, ?y, z: ?(None: t)}
 

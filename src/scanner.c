@@ -20,26 +20,26 @@ typedef struct ScannerState {
   bool eof_reported;
 } ScannerState;
 
-void *tree_sitter_rescript_external_scanner_create() {
+void *tree_sitter_reason_external_scanner_create() {
   void* state = malloc(sizeof(ScannerState));
   memset(state, 0, sizeof(ScannerState));
   return state;
 }
 
-void tree_sitter_rescript_external_scanner_destroy(void* state) {
+void tree_sitter_reason_external_scanner_destroy(void* state) {
   free(state);
 }
 
-void tree_sitter_rescript_external_scanner_reset(void* state) {
+void tree_sitter_reason_external_scanner_reset(void* state) {
   memset(state, 0, sizeof(ScannerState));
 }
 
-unsigned tree_sitter_rescript_external_scanner_serialize(void* state, char *buffer) {
+unsigned tree_sitter_reason_external_scanner_serialize(void* state, char *buffer) {
   memcpy(buffer, state, sizeof(ScannerState));
   return sizeof(ScannerState);
 }
 
-void tree_sitter_rescript_external_scanner_deserialize(void* state, const char *buffer, unsigned n_bytes) {
+void tree_sitter_reason_external_scanner_deserialize(void* state, const char *buffer, unsigned n_bytes) {
   memcpy(state, buffer, n_bytes);
 }
 
@@ -125,7 +125,7 @@ static bool is_identifier_start(char c) {
   return c == '_' || (c >= 'a' && c <= 'z');
 }
 
-bool tree_sitter_rescript_external_scanner_scan(
+bool tree_sitter_reason_external_scanner_scan(
     void* payload,
     TSLexer* lexer,
     const bool* valid_symbols
@@ -171,7 +171,7 @@ bool tree_sitter_rescript_external_scanner_scan(
   }
 
   // Magic ahead!
-  // We have two types of newline in ReScript. The one which ends the current statement,
+  // We have two types of newline in reason. The one which ends the current statement,
   // and the one used just for pretty-formatting (e.g. separates variant type values).
   // We report only the first one. The second one should be ignored and skipped as
   // whitespace.

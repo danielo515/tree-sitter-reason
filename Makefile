@@ -1,14 +1,14 @@
-
+REASON_PORTED=decorators,let_bindings,expressions
 TS=yarn tree-sitter
 
-# This is an opinionated list of significant ReScript repos on GitHub
+# This is an opinionated list of significant reason repos on GitHub
 # that are representative and trick-heavy enough to be a subject
-# for acceptance testing. The general idea: if `tree-sitter-rescript`
+# for acceptance testing. The general idea: if `tree-sitter-reason`
 # is 100% legit for this codebase, it should satisfy everyone.
-wild_github_repos := rescript-lang/rescript-react \
-										 rescript-association/rescript-lang.org \
-										 tinymce/rescript-webapi \
-										 cca-io/rescript-material-ui
+wild_github_repos := reason-lang/reason-react \
+										 reason-association/reason-lang.org \
+										 tinymce/reason-webapi \
+										 cca-io/reason-material-ui
 
 wild_sandboxes := $(patsubst %,test_wild/%,$(wild_github_repos))
 
@@ -22,6 +22,10 @@ binding.gyp: binding.gyp.json
 .PHONY: test
 test: generate
 	$(TS) test
+
+.PHONY: test-reason
+test-reason: generate
+	$(TS) test -f $(REASON_PORTED)
 
 test_wild/%:
 	@mkdir -p test_wild/

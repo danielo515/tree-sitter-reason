@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: 'rescript',
+  name: 'reason',
 
   externals: $ => [
     $._newline,
@@ -604,15 +604,15 @@ module.exports = grammar({
     ),
 
     array: $ => seq(
-      '[',
+      '[|',
       commaSept($.expression),
-      ']'
+      '|]'
     ),
 
     list: $ => seq(
-      'list{',
+      '[',
       optional(commaSep1t($._list_element)),
-      '}'
+      ']'
     ),
 
     _list_element: $ => choice(
@@ -901,15 +901,15 @@ module.exports = grammar({
     ),
 
     array_pattern: $ => seq(
-      '[',
+      '[|',
       optional(commaSep1t($._collection_element_pattern)),
-      ']',
+      '|]',
     ),
 
     list_pattern: $ => seq(
-      'list{',
+      '[',
       optional(commaSep1t($._collection_element_pattern)),
-      '}',
+      ']',
     ),
 
     _collection_element_pattern: $ => seq(
@@ -1032,9 +1032,10 @@ module.exports = grammar({
     ),
 
     decorator: $ => seq(
-      '@',
+      '[@',
       $.decorator_identifier,
-      optional($.decorator_arguments)
+      optional($.decorator_arguments),
+      ']'
     ),
 
     decorator_arguments: $ => seq(

@@ -68,7 +68,7 @@ type t = {
   a: int,
   b: myType,
 
-  @as("type")
+ [@as]("type")
   type_: string,
 
   mutable x: int,
@@ -133,7 +133,7 @@ Variant
 
 type t =
   | A
-  | @live("t.D") D
+  | [@live("t.D")] D
   | B(anotherType)
   | C({foo: int, bar: string})
   | D(module(Foo))
@@ -196,7 +196,7 @@ type t = [>
   | #"cc-cc"
   | #\"cc-cc"
   | #42
-  | @as("42") #FortyTwo
+  | [@as("42")] #FortyTwo
   | anotherType
   ]
 
@@ -333,12 +333,12 @@ type rec t = t
 Decorated
 ===========================================
 
-@deriving(abstract)
+[@deriving](abstract)
 type transitionCreateArgs = {
   easing: string,
 }
 
-type person = {@meth "say": (string, string) => unit}
+type person = [@meth] "say": (string, string) => unit}
 
 ---
 
