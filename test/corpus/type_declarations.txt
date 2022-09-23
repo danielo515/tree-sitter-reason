@@ -372,7 +372,7 @@ type rec student = {
   teacher: teacher
 }
 and teacher = {
-  students: array<student>
+  students: array(student)
 }
 
 ---

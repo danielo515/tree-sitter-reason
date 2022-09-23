@@ -256,14 +256,14 @@ module.exports = grammar({
     ),
 
     type_parameters: $ => seq(
-      '<',
+      '(',
       commaSep1t(
         seq(
           optional(choice('+', '-')),
           $.type_identifier
         )
       ),
-      '>',
+      ')',
     ),
 
     type_annotation: $ => seq(
@@ -395,9 +395,9 @@ module.exports = grammar({
     ),
 
     type_arguments: $ => seq(
-      '<',
+      '(',
       commaSep1t($._type),
-      '>'
+      ')'
     ),
 
     function_type: $ => prec.left(seq(
@@ -427,8 +427,10 @@ module.exports = grammar({
       ),
     ),
 
+    let_custom: $ => seq('let.', $.value_identifier),
+
     let_binding: $ => seq(
-      choice('export', 'let'),
+      choice('export', 'let', $.let_custom),
       optional('rec'),
       $._let_binding,
     ),

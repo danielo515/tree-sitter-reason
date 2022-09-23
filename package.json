@@ -4,6 +4,9 @@
   "main": "bindings/node",
   "author": "Victor Nakoryakov",
   "license": "MIT",
+  "scripts": {
+    "test": "tree-sitter test"
+  },
   "dependencies": {
     "nan": "^2.15.0"
   },
@@ -13,7 +16,10 @@
   "tree-sitter": [
     {
       "scope": "source.reason",
-      "file-types": ["res", "resi"],
+      "file-types": [
+        "re",
+        "rei"
+      ],
       "injection-regex": "reason"
     }
   ]
