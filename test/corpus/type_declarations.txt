@@ -191,8 +191,8 @@ Polyvar
 ===========================================
 
 type t = [>
-  | #AAA
-  | #bbb(anotherType)
+  | `AAA
+  | `bbb(anotherType)
   | #"cc-cc"
   | #\"cc-cc"
   | #42
@@ -201,7 +201,7 @@ type t = [>
   ]
 
 
-type foo<'a> = [> #Blue | #DeepBlue | #LightBlue ] as 'a
+type foo<'a> = [> `Blue | `DeepBlue | `LightBlue ] as 'a
 
 ---
 

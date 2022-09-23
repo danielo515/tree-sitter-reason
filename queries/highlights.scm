@@ -91,7 +91,7 @@
 ;-----
 
 (subscript_expression index: (string) @property)
-(polyvar_type_pattern "#" @constant)
+(polyvar_type_pattern "`" @constant)
 
 [
   ("include")
