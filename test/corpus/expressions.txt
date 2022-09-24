@@ -178,7 +178,7 @@ foo->bar->baz
 foo |> bar |> baz
 xs->Array.map(foo)->Array.sum
 5->Some
-foo->#Id
+foo->`Id
 
 bbox
 ->outset

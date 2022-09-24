@@ -68,7 +68,7 @@ type t = {
   a: int,
   b: myType,
 
- [@as]("type")
+ [@as "type"]
   type_: string,
 
   mutable x: int,
@@ -133,7 +133,7 @@ Variant
 
 type t =
   | A
-  | [@live("t.D")] D
+  | [@live "t.D"] D
   | B(anotherType)
   | C({foo: int, bar: string})
   | D(module(Foo))
@@ -193,10 +193,10 @@ Polyvar
 type t = [>
   | `AAA
   | `bbb(anotherType)
-  | #"cc-cc"
-  | #\"cc-cc"
-  | #42
-  | [@as("42")] #FortyTwo
+  | `"cc-cc"
+  | `\"cc-cc"
+  | `42
+  | [@as "42"] `FortyTwo
   | anotherType
   ]
 
@@ -333,7 +333,7 @@ type rec t = t
 Decorated
 ===========================================
 
-[@deriving](abstract)
+[@deriving abstract]
 type transitionCreateArgs = {
   easing: string,
 }

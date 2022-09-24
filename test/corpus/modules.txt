@@ -301,7 +301,7 @@ Externals
 external aX: t => float = "aX"
 [@val] external foo: int = "foo"
 [@bs.val] external foo: int = "foo"
-[@module("libfoo")] [@new] external foo: t = "Foo"
+[@module "libfoo"] [@new] external foo: t = "Foo"
 external _makeStyles: ({..}, . unit) => {..} = "makeStyles"
 
 [@send]
