@@ -1416,21 +1416,21 @@ module.exports = grammar({
     )),
 
     template_string: $ => seq(
-      // token(
+      token(
         // choice(
         //   '{j|',
           '{js|',
         //   '{json|',
         // ),
-      // ),
+      ),
       repeat($._template_string_content),
-      // token(
+      token(
         // choice(
         // '|j}',
         '|js}',
       //   '|json}',
       // )
-    // ),
+    ),
     ),
 
     _template_string_content: $ => choice(

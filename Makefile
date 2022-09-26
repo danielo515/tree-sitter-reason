@@ -23,9 +23,8 @@ binding.gyp: binding.gyp.json
 test: generate
 	$(TS) test
 
-.PHONY: test-reason
-test-reason: generate
-	$(TS) test -f $(REASON_PORTED)
+test-focus: generate
+	$(TS) test -f focus
 
 test_wild/%:
 	@mkdir -p test_wild/

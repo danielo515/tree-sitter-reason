@@ -128,30 +128,26 @@ static bool is_identifier_start(char c) {
   return c == '_' || (c >= 'a' && c <= 'z');
 }
 
+const char *bool_to_str(bool b) { return b ? "true" : "false"; };
 const char js_string_open_chars[] = "{js|";
-
-static bool is_js_string_open(TSLexer *lexer) {
-  char current = js_string_open_chars[0];
-  for (int i = 0; i < 5; ++i, current = js_string_open_chars[i]) {
-    if (current != lexer->lookahead) {
-      return false;
-    };
-    advance(lexer);
-  }
-  return true;
-}
-
 const char js_string_close_chars[] = "|js}";
 
-static bool is_js_string_close(TSLexer *lexer) {
-  printf("JS close called");
-  char current = js_string_open_chars[0];
-  for (int i = 0; i < 5; ++i, current = js_string_open_chars[i]) {
+static bool is_js_string_delimiter(TSLexer *lexer, bool useClose) {
+  printf("==JS delimiter called\n");
+  lexer->mark_end(lexer); // prevent chars from being consumed unless called
+                          // again after the scan
+  const char *source = useClose ? js_string_close_chars : js_string_open_chars;
+  char current = source[0];
+  for (int i = 0; i < 4; ++i, current = source[i]) {
+
+    printf("%c = %c %s\n", current, lexer->lookahead,
+           bool_to_str(current != lexer->lookahead));
     if (current != lexer->lookahead) {
       return false;
     };
     advance(lexer);
   }
+  lexer->mark_end(lexer);
   return true;
 }
 
@@ -175,15 +171,19 @@ bool tree_sitter_reason_external_scanner_scan(void *payload, TSLexer *lexer,
         break;
       case '\\':
         return has_content;
+      case '|':
+        if (is_js_string_delimiter(lexer, true)) {
+          state->in_backticks = false;
+          lexer->result_symbol = JS_STRING_CLOSE;
+          lexer->mark_end(lexer);
+          printf("=== Indeed it is a close\n");
+          return has_content;
+        }
       default:
         advance(lexer);
       }
     }
 
-    if (is_js_string_close(lexer)) {
-      state->in_backticks = false;
-      return true;
-    }
     return true;
   }
 
@@ -297,10 +297,11 @@ bool tree_sitter_reason_external_scanner_scan(void *payload, TSLexer *lexer,
     return true;
   }
   // do this the last one because it may consume the next tokens to parse
-  if (valid_symbols[JS_STRING_OPEN] && is_js_string_open(lexer)) {
+  if (valid_symbols[JS_STRING_OPEN] && is_js_string_delimiter(lexer, false)) {
     state->in_backticks = true;
-    lexer->result_symbol = TEMPLATE_CHARS;
+    lexer->result_symbol = JS_STRING_OPEN;
     lexer->mark_end(lexer);
+    printf("It is indeed a JS_STRING_OPEN\n");
     return true;
   }
 
