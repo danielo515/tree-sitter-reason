@@ -106,7 +106,7 @@ Quote escaping
 Template strings simple focus
 ============================================
 
-{js|one line|js};
+{js|hello|js};
 
 ---
 

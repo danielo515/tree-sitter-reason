@@ -6,7 +6,8 @@ module.exports = grammar({
     $.comment,
     $._newline_and_comment,
     '"',
-    "`",
+    '|js}',
+    '{js|',
     $._template_chars,
     $._lparen,
     $._rparen,
@@ -1036,7 +1037,7 @@ module.exports = grammar({
     decorator: $ => seq(
       '[@',
       $.decorator_identifier,
-      optional($.decorator_arguments),
+      optional(choice($.string, $.tuple, $.value_identifier)),
       ']'
     ),
 
@@ -1415,31 +1416,30 @@ module.exports = grammar({
     )),
 
     template_string: $ => seq(
-      token(seq(
-        optional(choice(
-          'j',
-          'js',
-          'json',
-        )),
-        '`',
-      )),
+      // token(
+        // choice(
+        //   '{j|',
+          '{js|',
+        //   '{json|',
+        // ),
+      // ),
       repeat($._template_string_content),
-      '`'
+      // token(
+        // choice(
+        // '|j}',
+        '|js}',
+      //   '|json}',
+      // )
+    // ),
     ),
 
     _template_string_content: $ => choice(
       $._template_chars,
       $.template_substitution,
-      choice(
-        alias('\\`', $.escape_sequence),
-        $.escape_sequence,
-      ),
+      $.escape_sequence,
     ),
 
-    template_substitution: $ => choice(
-      seq('$', $.value_identifier),
-      seq('${', $.expression, '}'),
-    ),
+    template_substitution: $ => seq('${', $.expression, '}'),
 
     character: $ => seq(
       "'",
