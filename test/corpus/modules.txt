@@ -305,14 +305,17 @@ external aX: t => float = "aX"
 external _makeStyles: ({..}, . unit) => {..} = "makeStyles"
 
 [@send]
-external pushState: (Dom.history, [@as(json`null`)] _, [@as("")] _, ~href: string) => unit =
+external pushState: (Dom.history, [@as {json|null|json}] _, [@as ""] _, ~href: string) => unit =
   "pushState"
 
 [@send]
 external add: (
   t,
-  ~option:[@unwrap] [`Option(Dom.htmlOptionElement) | `OptGroup(Dom.htmlOptGroupElement)],
-) => unit = "add"
+    ~option: [@unwrap] [
+               | `Option(Dom.htmlOptionElement)
+               | `OptGroup(Dom.htmlOptGroupElement)
+             ]
+    ) => unit = "add"
 
 ---
 
@@ -403,12 +406,12 @@ external add: (
 Decorators
 ===========================================
 
-[@warning("-27")]
+[@warning "-27"]
 
 ---
 
 (source_file
-  (decorator_statement
+  (decorator
     (decorator_identifier)
     (decorator_arguments (string (string_fragment)))))
 

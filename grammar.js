@@ -121,7 +121,6 @@ module.exports = grammar({
 
     statement: $ => choice(
       alias($._decorated_statement, $.decorated),
-      $.decorator_statement,
       $.expression_statement,
       $.declaration,
       $.open_statement,
@@ -133,11 +132,6 @@ module.exports = grammar({
       $.declaration,
     ),
 
-    decorator_statement: $ => seq(
-      '@@',
-      $.decorator_identifier,
-      optional($.decorator_arguments)
-    ),
 
     block: $ => prec.right(seq(
       '{',
@@ -1037,15 +1031,11 @@ module.exports = grammar({
     decorator: $ => seq(
       '[@',
       $.decorator_identifier,
-      optional(choice($.string, $.tuple, $.value_identifier)),
+      optional($.decorator_arguments),
       ']'
     ),
 
-    decorator_arguments: $ => seq(
-      '(',
-      commaSept($.expression),
-      ')',
-    ),
+    decorator_arguments: $ => choice($.string, $.tuple, $.value_identifier),
 
     subscript_expression: $ => prec.right('member', seq(
       field('object', $.primary_expression),
@@ -1487,3 +1477,5 @@ function commaSept(rule) {
 function sep1(delimiter, rule) {
   return seq(rule, repeat(seq(delimiter, rule)))
 }
+
+

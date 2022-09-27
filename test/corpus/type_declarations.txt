@@ -306,7 +306,7 @@ type t = {
 Generic
 ===========================================
 
-type t<'a, 'b> = (array<'a>, array<'b>)
+type t('a, 'b) = (array('a), array('b))
 
 ---
 
@@ -338,7 +338,7 @@ type transitionCreateArgs = {
   easing: string,
 }
 
-type person = [@meth] "say": (string, string) => unit}
+type person = {[@meth] "say": (string, string) => unit}
 
 ---
 
@@ -422,8 +422,8 @@ type test = (. ~attr: string) => unit
 Variance annotations
 ===========================================
 
-type t<+'a>
-type t<-'a>
+type t(+'a)
+type t(-'a)
 
 ---
 

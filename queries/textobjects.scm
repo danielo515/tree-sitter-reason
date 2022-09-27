@@ -85,14 +85,7 @@
   . ","? @_type_arguments_end
   (#make-range! "parameter.outer" @parameter.inner @_type_arguments_end))
 
-(decorator_arguments
-  "," @_decorator_arguments_start
-  . (_) @parameter.inner
-  (#make-range! "parameter.outer" @_decorator_arguments_start @parameter.inner))
-(decorator_arguments
-  . (_) @parameter.inner
-  . ","? @_arguments_end
-  (#make-range! "parameter.outer" @parameter.inner @_arguments_end))
+(decorator_arguments) @parameter.outer
 
 (variant_parameters
   "," @_variant_parameters_start

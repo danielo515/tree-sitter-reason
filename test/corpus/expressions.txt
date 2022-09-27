@@ -1063,31 +1063,29 @@ Foo((Obj.magic(v): string))
 Extensions
 ============================================
 
-%debugger
-%re("/[^1-9]/g")
-%%raw("function () { return 42; }")
-%%private(let mult = (x, y) => x * y)
-%%private(
-  let x = "1"
-  let y = 1;
-)
-let x = %raw(`
+[%debugger];
+[%re "/[^1-9]/g"];
+%raw
+"function c() { return 42; }";
+let%private mult = (x, y) => x * y;
+[%%private let x = "1"; let y = 1];
+let x = [%raw {js|
   function test(a) {
-    return "\" + a + "\";
+    return "x" + a + "x";
   }
-`)
-let x = %raw(j`
+|js}];
+let x = [%raw {j|
   function test(a) {
-    return "\" + a + "\";
+    return "x" + a + "x";
   }
-`)
-module Test = %graphql(`
+|j}];
+module Test = [%graphql {js|
   query {
     test {
       id
     }
   }
-`)
+|js}];
 
 ---
 

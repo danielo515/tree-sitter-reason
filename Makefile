@@ -1,4 +1,3 @@
-REASON_PORTED=decorators,let_bindings,expressions
 TS=yarn tree-sitter
 
 # This is an opinionated list of significant reason repos on GitHub
