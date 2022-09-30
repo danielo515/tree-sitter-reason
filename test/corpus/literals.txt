@@ -118,7 +118,7 @@ Template string alone
                         ))
 
 ============================================
-Template strings focus
+Template strings
 ============================================
 
 {js|one line|js};
@@ -164,6 +164,20 @@ Template strings subsitution multi-line
       (binary_expression (number) (number)))
     (template_substitution
       (binary_expression (number) (number))))))
+
+
+
+
+============================================
+Javascript strings focus
+============================================
+
+{j|one|j};
+
+---
+
+(source_file
+  (expression_statement (template_string)))
 
 ============================================
 Tricky template strings

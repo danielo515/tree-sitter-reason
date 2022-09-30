@@ -6,8 +6,8 @@ module.exports = grammar({
     $.comment,
     $._newline_and_comment,
     '"',
-    '|js}',
-    '{js|',
+    $._js_string_close,
+    $._js_string_open,
     $._template_chars,
     $._lparen,
     $._rparen,
@@ -1405,22 +1405,13 @@ module.exports = grammar({
       )
     )),
 
+    _js_string_open: $ => token(choice( '{j|', '{js|')),
+    _js_string_close: $ => token( choice( '|j}', '|js}',)),
+
     template_string: $ => seq(
-      token(
-        // choice(
-        //   '{j|',
-          '{js|',
-        //   '{json|',
-        // ),
-      ),
+      $._js_string_open,
       repeat($._template_string_content),
-      token(
-        // choice(
-        // '|j}',
-        '|js}',
-      //   '|json}',
-      // )
-    ),
+      $._js_string_close 
     ),
 
     _template_string_content: $ => choice(

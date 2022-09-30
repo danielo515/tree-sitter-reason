@@ -3,6 +3,12 @@
 #include <tree_sitter/parser.h>
 #include <wctype.h>
 
+#define debug(msg, ...)                                                        \
+  if (getenv("TREE_SITTER_DEBUG")) {                                           \
+    printf(msg, __VA_ARGS__);                                                  \
+    printf("\n");                                                              \
+  }
+
 enum TokenType {
   NEWLINE,
   COMMENT,
@@ -137,9 +143,18 @@ static bool is_js_string_delimiter(TSLexer *lexer, bool useClose) {
                           // again after the scan
   const char *source = useClose ? js_string_close_chars : js_string_open_chars;
   char current = source[0];
+  bool is_short = false;
   for (int i = 0; i < 4; ++i, current = source[i]) {
-
-    if (current != lexer->lookahead) {
+    debug("%d expect -> %c == %c <- real", i, current, lexer->lookahead);
+    // Exception for the shorter version of {j| and |j}
+    if (i == 2) {
+      if (lexer->lookahead == '|' || lexer->lookahead == '}') {
+        debug("it is short version useClose: %d ", useClose);
+        advance(lexer);
+        return true;
+      }
+    }
+    if (current != lexer->lookahead && !is_short) {
       return false;
     };
     advance(lexer);
