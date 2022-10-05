@@ -1420,7 +1420,10 @@ module.exports = grammar({
       $.escape_sequence,
     ),
 
-    template_substitution: $ => seq('${', $.expression, '}'),
+    template_substitution: $ => choice(
+      seq('$', $.value_identifier),
+      seq('${', $.expression, '}'),
+    ),
 
     character: $ => seq(
       "'",
