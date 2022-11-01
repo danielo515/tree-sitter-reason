@@ -365,7 +365,7 @@ module.exports = grammar({
       optional('mutable'),
       alias($.value_identifier, $.property_identifier),
       optional('?'),
-      $.type_annotation,
+      optional($.type_annotation),
     ),
 
     object_type: $ => seq(
