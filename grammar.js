@@ -705,7 +705,6 @@ module.exports = grammar({
         $.block,
         $.primary_expression,
       ),
-      'catch',
       '{',
       repeat($.switch_match),
       '}',
