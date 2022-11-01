@@ -1,13 +1,20 @@
+#define debug_mode 0
+#if debug_mode
 #include <stdio.h>
+#endif /* debug_mode */
 #include <string.h>
 #include <tree_sitter/parser.h>
 #include <wctype.h>
 
+#if debug_mode
 #define debug(msg, ...)                                                        \
   if (getenv("TREE_SITTER_DEBUG")) {                                           \
     printf(msg, __VA_ARGS__);                                                  \
     printf("\n");                                                              \
   }
+#else
+#define debug(msg, ...)
+#endif
 
 enum TokenType {
   NEWLINE,

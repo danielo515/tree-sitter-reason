@@ -24,7 +24,7 @@ test: generate
 
 test-focus: generate
 	echo $(debug)
-	$(TS) test --filter focus $(if $(debug),--debug)
+	$(TS) test --filter focus -D $(if $(debug),--debug)
 
 test_wild/%:
 	@mkdir -p test_wild/
@@ -32,4 +32,11 @@ test_wild/%:
 
 .PHONY: test_wild
 test_wild: $(wild_sandboxes)
-	$(TS) parse --quiet --stat '$@/**/*.res*'
+	$(TS) parse --quiet --stat '$@/**/*.re*'
+
+tree-sitter-reason.wasm: grammar.js src/scanner.c
+	$(TS) build-wasm
+
+.PHONY: playground
+playground: tree-sitter-reason.wasm 
+	$(TS) playground
