@@ -1065,8 +1065,8 @@ Extensions
 
 [%debugger];
 [%re "/[^1-9]/g"];
-%raw
-"function c() { return 42; }";
+[%raw
+"function c() { return 42; }"];
 let%private mult = (x, y) => x * y;
 [%%private let x = "1"; let y = 1];
 let x = [%raw {js|
