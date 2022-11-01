@@ -23,7 +23,8 @@ test: generate
 	$(TS) test
 
 test-focus: generate
-	$(TS) test --filter focus
+	echo $(debug)
+	$(TS) test --filter focus $(if $(debug),--debug)
 
 test_wild/%:
 	@mkdir -p test_wild/

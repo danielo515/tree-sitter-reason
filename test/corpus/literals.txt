@@ -169,7 +169,7 @@ Template strings subsitution multi-line
 
 
 ============================================
-Javascript strings focus
+Javascript strings
 ============================================
 
 {j|one|j};
