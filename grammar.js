@@ -429,10 +429,10 @@ module.exports = grammar({
       ),
     ),
 
-    let_custom: $ => seq('let.', $.value_identifier),
+    _let_custom: $ => seq('let.', $._word),
 
     let_binding: $ => seq(
-      choice('export', 'let', $.let_custom),
+      choice('export', 'let', $._let_custom),
       optional('rec'),
       $._let_binding,
     ),
@@ -453,7 +453,7 @@ module.exports = grammar({
       // show this doubt to the parser
       repeat($._newline),
       repeat($.decorator),
-      'and',
+      choice('and', seq('and.', $._word)),
       $._let_binding,
     ),
 
@@ -1331,6 +1331,8 @@ module.exports = grammar({
     decorator_identifier: $ => /[a-zA-Z0-9_\.]+/,
 
     extension_identifier: $ => /[a-zA-Z0-9_\.]+/,
+
+    _word: $ => /[a-zA-Z0-9_]+/,
 
     number: $ => {
       const hex_literal = seq(
