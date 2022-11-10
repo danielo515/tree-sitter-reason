@@ -489,6 +489,7 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.value_identifier_path,
       $.value_identifier,
+      $.reference_access,
       $.number,
       $.string,
       $.template_string,
@@ -512,6 +513,7 @@ module.exports = grammar({
       $.pipe_expression,
       $.subscript_expression,
       $.member_expression,
+      $.js_member_expression,
       $.module_pack_expression,
     ),
 
@@ -728,6 +730,7 @@ module.exports = grammar({
       choice('->', '|>'),
       choice(
         $.value_identifier,
+        $.reference_access,
         $.value_identifier_path,
         $.variant_identifier,
         $.polyvar_identifier,
@@ -959,7 +962,8 @@ module.exports = grammar({
       $.jsx_fragment,
       $.block,
       $.spread_element,
-      $.member_expression
+      $.member_expression,
+      $.js_member_expression,
     ),
 
     jsx_opening_element: $ => prec.dynamic(-1, seq(
@@ -1026,6 +1030,7 @@ module.exports = grammar({
     _mutation_lvalue: $ => choice(
       $.value_identifier,
       $.member_expression,
+      $.js_member_expression,
       $.subscript_expression,
     ),
 
@@ -1058,6 +1063,12 @@ module.exports = grammar({
       field('property', alias($.value_identifier, $.property_identifier)),
     )),
 
+    js_member_expression: $ => prec('member', seq(
+      field('object', $.primary_expression),
+      '##',
+      field('property', alias($.value_identifier, $.property_identifier)),
+    )),
+
     spread_element: $ => seq('...', $.expression),
 
     ternary_expression: $ => prec.left(seq(
@@ -1071,6 +1082,7 @@ module.exports = grammar({
     for_expression: $ => seq(
       'for',
       $.value_identifier,
+      $.reference_access,
       'in',
       $.expression,
       choice('to', 'downto'),
@@ -1322,6 +1334,8 @@ module.exports = grammar({
       /[a-z_][a-zA-Z0-9_']*/,
       $._escape_identifier,
     ),
+
+    reference_access: $ => seq($.value_identifier, '^'),
 
     _escape_identifier: $ => token(seq('\\"', /[^"]+/ , '"')),
 
