@@ -102,60 +102,92 @@ Quote escaping
   (expression_statement
     (string (string_fragment) (escape_sequence) (string_fragment)))
   (expression_statement (string (string_fragment))))
+============================================
+Template string alone
+============================================
+
+{js|hello 
+    multi line ${format()}|js};
+
+---
+
+(source_file
+  (expression_statement (template_string 
+                          (template_substitution 
+                            (call_expression (value_identifier) (arguments))))
+                        ))
 
 ============================================
 Template strings
 ============================================
 
-`one line`
-`multi
-  line`
+{js|one line|js};
+{js|multi
+  line|js};
 
-j`Hello`
+{js|Hello|js};
 
-`multi
-  ${2 + 2}
-  hello
-  ${1 + 1}
-  line`
+{js|The command `git ${format(" ")}` exited with an unexpected code: ${exitCode}.
+The caller should either handle this error, or expect that exit code.|js};
 
-`The command \`git ${format(" ")}\` exited with an unexpected code: ${exitCode}.
-The caller should either handle this error, or expect that exit code.`
+{js|//|js};
 
-`//`
+{js|\\|js};
 
-`\\`
-
-----
+---
 
 (source_file
   (expression_statement (template_string))
   (expression_statement (template_string))
   (expression_statement (template_string))
   (expression_statement (template_string
-    (template_substitution
-      (binary_expression (number) (number)))
-    (template_substitution
-      (binary_expression (number) (number)))))
-  (expression_statement (template_string
-    (escape_sequence)
-    (template_substitution (call_expression
-      (value_identifier)
-      (arguments (string (string_fragment)))))
-    (escape_sequence)
+    (template_substitution (call_expression (value_identifier) (arguments (string (string_fragment)))))
     (template_substitution (value_identifier))))
   (expression_statement (template_string))
   (expression_statement (template_string (escape_sequence))))
 
 ============================================
+Template strings subsitution multi-line
+============================================
+
+{js|multi
+  ${2 + 2}
+  hello
+  ${1 + 1}
+  line |js}
+
+---
+
+(source_file
+  (expression_statement (template_string
+    (template_substitution
+      (binary_expression (number) (number)))
+    (template_substitution
+      (binary_expression (number) (number))))))
+
+
+
+
+============================================
+Javascript strings
+============================================
+
+{j|one|j};
+
+---
+
+(source_file
+  (expression_statement (template_string)))
+
+============================================
 Tricky template strings
 ============================================
 
-`$`
-`$$`
-`$$$`
-`$-notAsubstitution`
-`$NotAsubstitution`
+{js|$|js};
+{js|$$|js};
+{js|$$$|js};
+{js|$-notAsubstitution|js};
+{js|$NotAsubstitution|js};
 
 ---
 

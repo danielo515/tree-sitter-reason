@@ -1,4 +1,3 @@
-REASON_PORTED=decorators,let_bindings,expressions
 TS=yarn tree-sitter
 
 # This is an opinionated list of significant reason repos on GitHub
@@ -23,9 +22,9 @@ binding.gyp: binding.gyp.json
 test: generate
 	$(TS) test
 
-.PHONY: test-reason
-test-reason: generate
-	$(TS) test -f $(REASON_PORTED)
+test-focus: generate
+	echo $(debug)
+	$(TS) test --filter focus -D $(if $(debug),--debug)
 
 test_wild/%:
 	@mkdir -p test_wild/
@@ -33,4 +32,11 @@ test_wild/%:
 
 .PHONY: test_wild
 test_wild: $(wild_sandboxes)
-	$(TS) parse --quiet --stat '$@/**/*.res*'
+	$(TS) parse --quiet --stat '$@/**/*.re*'
+
+tree-sitter-reason.wasm: grammar.js src/scanner.c
+	$(TS) build-wasm
+
+.PHONY: playground
+playground: tree-sitter-reason.wasm 
+	$(TS) playground

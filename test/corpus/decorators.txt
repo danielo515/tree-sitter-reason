@@ -31,7 +31,7 @@ let foo = ([@doesNotRaise] String.make)(12, ' ')
 
 let foo = [@doesNotRaise] String.make(12, ' ')
 
-let onResult = () => [@doesNotRaise] Belt.Array.getExn([], 0)
+let onResult = () => [@doesNotRaise] Belt.Array.getExn([||], 0)
 
 ---
 

@@ -126,7 +126,6 @@
 [
   "exception"
   "try"
-  "catch"
 ] @exception
 
 (call_expression

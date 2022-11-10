@@ -78,7 +78,7 @@ Custom type children
 ==============================================
 Attribute values
 ==============================================
-<Foo a=1 b=#hello c=None punned ?optA optB=?{foo} />;
+<Foo a=1 b=`hello c=None punned ?optA optB=?{foo} />;
 <Bar
   x=qux->zoo
   y=true

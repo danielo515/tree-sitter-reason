@@ -178,7 +178,7 @@ foo->bar->baz
 foo |> bar |> baz
 xs->Array.map(foo)->Array.sum
 5->Some
-foo->#Id
+foo->`Id
 
 bbox
 ->outset
@@ -1060,34 +1060,13 @@ Foo((Obj.magic(v): string))
           (type_annotation (type_identifier)))))))
 
 ============================================
-Extensions
+Extensions simple
 ============================================
 
-%debugger
-%re("/[^1-9]/g")
-%%raw("function () { return 42; }")
-%%private(let mult = (x, y) => x * y)
-%%private(
-  let x = "1"
-  let y = 1;
-)
-let x = %raw(`
-  function test(a) {
-    return "\" + a + "\";
-  }
-`)
-let x = %raw(j`
-  function test(a) {
-    return "\" + a + "\";
-  }
-`)
-module Test = %graphql(`
-  query {
-    test {
-      id
-    }
-  }
-`)
+[%debugger];
+[%re "/[^1-9]/g"];
+[%raw
+"function c() { return 42; }"];
 
 ---
 
@@ -1106,8 +1085,19 @@ module Test = %graphql(`
       (extension_identifier)
       (expression_statement
         (string
-          (raw_js
-            (string_fragment))))))
+        (raw_js
+          (string_fragment)))))))
+
+============================================
+Extensions with code
+============================================
+
+[%%private let mult = (x, y) => x * y];
+[%%private let x = "1"; let y = 1];
+
+---
+
+(source_file
   (expression_statement
     (extension_expression
       (extension_identifier)
@@ -1129,7 +1119,54 @@ module Test = %graphql(`
           (string_fragment)))
       (let_binding
         (value_identifier)
-        (number))))
+        (number)))))
+
+============================================
+Extensions focus
+============================================
+
+let x = [%raw {js|
+  function test(a) {
+    return "x" + a + "x";
+  }
+|js}];
+
+---
+
+(source_file
+  (let_binding
+      (value_identifier)
+        (extension_expression
+          (extension_identifier)
+          (expression_statement
+            (template_string
+              (raw_js))))))
+
+============================================
+Extensions
+============================================
+
+let x = [%raw {js|
+  function test(a) {
+    return "x" + a + "x";
+  }
+|js}];
+let x = [%raw {j|
+  function test(a) {
+    return "x" + a + "x";
+  }
+|j}];
+module Test = [%graphql {js|
+  query {
+    test {
+      id
+    }
+  }
+|js}];
+
+---
+
+(source_file
   (let_binding
       (value_identifier)
         (extension_expression
