@@ -233,7 +233,7 @@ module.exports = grammar({
     type_declaration: $ => seq(
       optional('export'),
       'type',
-      optional('rec'),
+      optional('nonrec'),
       $._type_declaration,
     ),
 
