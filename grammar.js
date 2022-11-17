@@ -459,6 +459,7 @@ module.exports = grammar({
 
     _binding_pattern: $ => choice(
       $.value_identifier,
+      $.operator_as_value,
       $.tuple_pattern,
       $.record_pattern,
       $.array_pattern,
@@ -519,9 +520,10 @@ module.exports = grammar({
 
     parenthesized_expression: $ => seq(
       '(',
-      repeat($.decorator),
-      $.expression,
-      optional($.type_annotation),
+      choice(
+        seq(repeat($.decorator), $.expression, optional($.type_annotation)),
+        $._operator_as_value
+      ),
       ')'
     ),
 
@@ -1429,6 +1431,8 @@ module.exports = grammar({
 
     _js_string_open: $ => token(choice( '{j|', '{js|')),
     _js_string_close: $ => token( choice( '|j}', '|js}',)),
+    _operator_as_value: _ => /[^a-zA-Z0-9)(]+/,
+    operator_as_value: $ => seq('(',$._operator_as_value,')'),
 
     template_string: $ => seq(
       $._js_string_open,
